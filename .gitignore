@@ -1,0 +1,17 @@
+.aux
+*.bbl
+*.blg
+*.pdf
+*.gz
+*.png
+*.odt
+tmp.*
+*.ovito
+dump.*
+*.svg
+*.lammps
+*__pycache__
+deleted_pote_files.txt
+*ninb
+*.idea
+2021*
