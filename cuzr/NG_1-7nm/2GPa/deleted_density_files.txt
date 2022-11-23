@@ -1,0 +1,4 @@
+tmp.density_coll_Cu50Zr50_random_NG_seg_2GPa_asp_All
+tmp.density_coll_Cu50Zr50_random_NG_seg_2GPa_ann_All
+tmp.density_coll_Cu50Zr50_random_NG_seg_2GPa_asp_All
+tmp.density_coll_Cu50Zr50_random_NG_seg_2GPa_ann_All

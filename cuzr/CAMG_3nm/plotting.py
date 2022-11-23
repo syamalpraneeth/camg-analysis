@@ -289,6 +289,11 @@ def pe_plot_species(name, c1, c2, c3, c4, c5, c6, cs, typ):
                       height=1.,  # height : 1 inch
                       loc=1)
 
+  axins3 = inset_axes(ax2,
+                      width="40%",  # width = 30% of parent_bbox
+                      height=1.,  # height : 1 inch
+                      loc='lower right')
+
   for axis in [axins1,axins2]:
     axis.plot(x[:, 0], y_norm[:, 0], ':', color=cscheme(1), label=c1)
     axis.plot(x[:, 1], y_norm[:, 1], '--',color=cscheme(2), label=c2)
@@ -297,7 +302,8 @@ def pe_plot_species(name, c1, c2, c3, c4, c5, c6, cs, typ):
     axis.plot(x[:, 4], y_norm[:, 4], color=cscheme(5), label=c5)
     axis.plot(x[:, 5], y_norm[:, 5], color=cscheme(6), label=c6)
 
-  # axins3.plot(rng, pot_e, label=r'$\sum^{N_{norm}}(E^{pot})$')
+#the issue was in plotting the exact sum, as opposed to summing up the binned data, which would be an approximate sum
+  axins3.plot(rng, pot_e, label=r'$\sum^{N_{norm}}(E^{pot})$')
   fig.tight_layout()
   plt.subplots_adjust(wspace=0.15)
 
@@ -410,11 +416,10 @@ def voro_plot_species(name, m1, m2, m3, m4, m5, m6, l1, l2, l3, l4, l5, l6, spec
   plt.xticks(y1, b1, rotation=90)
 
   qr = name.split(" ")[-1].split("e") #bbox_to_anchor=(1, 0.6),
-  if species == 0: ax.legend(fontsize=13, loc=1, title=r'${10}^{' + str(qr[1]) + '}$' + r'$K/s$')
-  else: ax.legend(fontsize=13, loc=1, title=r'${10}^{' + str(qr[1]) + '}$' + r'$K/s$, ' + case)
+  if species == 0: ax.legend(fontsize=13, loc=1, title=r'${10}^{' + str(qr[1]) + '}$' + r'$K/s$', title_fontsize=13)
+  else: ax.legend(fontsize=13, loc=1, title=r'${10}^{' + str(qr[1]) + '}$' + r'$K/s$, ' + case, title_fontsize=13)
   # if species==0: ax.legend(fontsize=12,title="{:.0e}".format(float(name.split(" ")[-1]))+r'$\frac{K}{s}$')
   # else: ax.legend(fontsize=12,title="{:.0e}".format(float(name.split(" ")[-1]))+r'$\frac{K}{s}$, '+case+'')
-
 
   #    ax.invert_yaxis()
   yl = max(max(h1, h2, h3, h4, h5, h6)) * 1.05

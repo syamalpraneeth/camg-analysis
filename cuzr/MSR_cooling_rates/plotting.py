@@ -168,8 +168,9 @@ def plot_allrdf(name, case1, case2, case3, case4, cs, typ):
     # p2 = axs[1].plot(x, y2, (6-i)*w, label='_Hidden', color=cscheme(i), zorder=3, lw=1)
     # p3 = axs[2].plot(x, y3, (6-i)*w, label='_Hidden', color=cscheme(i), zorder=3, lw=1)
 
+    qr = case.split("e")
     for ax in axs:
-      ax.text(0, 0.08+(4 - i)*w, case, fontsize='10')
+      ax.text(0, 0.08+(4 - i)*w, r'${10}^{' + str(qr[1]) + '}$' + ' K/s', fontsize='10')
       # ax.view_init(azim=275, elev=100)
       ax.tick_params(axis="x",which='minor',bottom=True, top=True, labelsize=14)
 
@@ -245,7 +246,7 @@ def pe_plot_species(name, c1, c2, c3, c4, cs, typ):
 
   #print("works pe plot 2.5")
 
-  fig, (ax, ax2) = plt.subplots(1, 2, figsize=(10, 5), sharey=True)
+  fig, (ax, ax2) = plt.subplots(1, 2, figsize=(8, 5), sharey=True)
   for axis in [ax,ax2]:
     axis.set_facecolor(cscheme(cs + 7))
     if cs == 1: axis.patch.set_alpha(0.2)
@@ -257,14 +258,20 @@ def pe_plot_species(name, c1, c2, c3, c4, cs, typ):
     plt.setp(axis.spines.values(), linewidth=1.5)
 
     plt.sca(axis)
-    p1 = axis.plot(x[:, 0], y_norm[:, 0], color=cscheme(1), label=c1,zorder=3, lw=2)
-    p2 = axis.plot(x[:, 1], y_norm[:, 1], color=cscheme(2), label=c2,zorder=3, lw=2)
-    p3 = axis.plot(x[:, 2], y_norm[:, 2], color=cscheme(3), label=c3,zorder=3, lw=2)
-    p4 = axis.plot(x[:, 3], y_norm[:, 3], color=cscheme(4), label=c4,zorder=3, lw=2)
+
+    lab1 = r'${10}^{' + str(c1.split("e")[1]) + '}$' + ' K/s'
+    lab2 = r'${10}^{' + str(c2.split("e")[1]) + '}$' + ' K/s'
+    lab3 = r'${10}^{' + str(c3.split("e")[1]) + '}$' + ' K/s'
+    lab4 = r'${10}^{' + str(c4.split("e")[1]) + '}$' + ' K/s'
+
+    p1 = axis.plot(x[:, 0], y_norm[:, 0], color=cscheme(1), label=lab1,zorder=3, lw=2)
+    p2 = axis.plot(x[:, 1], y_norm[:, 1], color=cscheme(2), label=lab2,zorder=3, lw=2)
+    p3 = axis.plot(x[:, 2], y_norm[:, 2], color=cscheme(3), label=lab3,zorder=3, lw=2)
+    p4 = axis.plot(x[:, 3], y_norm[:, 3], color=cscheme(4), label=lab4,zorder=3, lw=2)
 
   # qr = name.split(" ")[-1].split("e")
   # ax.legend(fontsize=12, bbox_to_anchor=(1, 0.6), loc='upper right', title= r'${10}^{' + str(qr[1]) + '}$' + r'$K/s$')
-  ax.legend(fontsize=12, bbox_to_anchor=(1, 0.6))
+  ax2.legend(fontsize=12, loc ='lower right') # bbox_to_anchor=(1, 0.6))
 
   ax.set_xlabel('P.E. per Zr Atom (eV)', fontsize=17)
   ax2.set_xlabel('P.E. per Cu Atom (eV)', fontsize=17)
@@ -288,12 +295,12 @@ def pe_plot_species(name, c1, c2, c3, c4, cs, typ):
                       width="50%",  # width = 30% of parent_bbox
                       height=1.,  # height : 1 inch
                       loc=1)
-  axins3 = inset_axes(ax2,
+  axins3 = inset_axes(ax,
                       width="40%",  # width = 30% of parent_bbox
                       height=1.5,  # height : 1 inch
-                      bbox_to_anchor=(0.0771,0.11,0.88,0.3),
-                      bbox_transform=ax2.transAxes,
-                      loc=4)
+                      bbox_to_anchor=(0.1071,0.21,1.1,0.3),
+                      bbox_transform=ax.transAxes,
+                      loc='center right')
 
   for axis in [axins1,axins2]:
     axis.plot(x[:, 0], y_norm[:, 0], color=cscheme(1), label=c1)
@@ -333,7 +340,7 @@ def pe_plot_species(name, c1, c2, c3, c4, cs, typ):
   print(y1)
   axins3.plot([1,2,3,4], y1, 'o-', label=r'$\sum^{N_{norm}}(E^{pot})$')
   axins3.set_ylabel(r'Avg. P.E. (eV/atom)',fontsize=12)
-  plt.xticks([1,2,3,4], x1, rotation=45)
+  plt.xticks([1,2,3,4], [lab1,lab2,lab3,lab4], rotation=45)
 
   if cs == 0:
     plt.savefig('pe-atom_' + name.replace(" ", "_") + '_' + tag + '.png',dpi=400)
@@ -415,10 +422,15 @@ def voro_plot_species(name, m1, m2, m3, m4, l1, l2, l3, l4, species, cs, typ):
 
   plt.sca(ax)
 
-  p1 = ax.bar(y1, h1, width=0.15, label=l1, color=cscheme(1), edgecolor='black',zorder=3)
-  p2 = ax.bar(y1 + w, h2, width=0.15, label=l2, color=cscheme(2), edgecolor='black',zorder=3)
-  p3 = ax.bar(y1 + 2 * w, h3, width=0.15, label=l3, color=cscheme(3), edgecolor='black', hatch=".",zorder=3)
-  p4 = ax.bar(y1 + 3 * w, h4, width=0.15, label=l4, color=cscheme(4), edgecolor='black', hatch="++",zorder=3)
+  lab1 = r'${10}^{' + str(l1.split("e")[1]) + '}$' + ' K/s'
+  lab2 = r'${10}^{' + str(l2.split("e")[1]) + '}$' + ' K/s'
+  lab3 = r'${10}^{' + str(l3.split("e")[1]) + '}$' + ' K/s'
+  lab4 = r'${10}^{' + str(l4.split("e")[1]) + '}$' + ' K/s'
+
+  p1 = ax.bar(y1, h1, width=0.15, label=lab1, color=cscheme(1), edgecolor='black',zorder=3)
+  p2 = ax.bar(y1 + w, h2, width=0.15, label=lab2, color=cscheme(2), edgecolor='black',zorder=3)
+  p3 = ax.bar(y1 + 2 * w, h3, width=0.15, label=lab3, color=cscheme(3), edgecolor='black', hatch=".",zorder=3)
+  p4 = ax.bar(y1 + 3 * w, h4, width=0.15, label=lab4, color=cscheme(4), edgecolor='black', hatch="++",zorder=3)
 
   plt.xticks(y1, b1, rotation=90)
 
@@ -621,16 +633,22 @@ def plot_atmhisto(name,m1, m2, m3, m4, l1, l2, l3, l4, species, cs, typ):
   # print('His tot', ht1.sum(axis=0) / n1, ht2.sum(axis=0) / n2, ht3.sum(axis=0) / n3, ht4.sum(axis=0) / n4,
   #       ht5.sum(axis=0) / n5, ht6.sum(axis=0) / n6)
 
-  plt.plot(c1, a1, color=cscheme(1), label=l1,zorder=3,lw=2)
-  plt.plot(c2, a2, color=cscheme(2), label=l2,zorder=3,lw=2)
-  plt.plot(c3, a3, color=cscheme(3), label=l3,zorder=3,lw=2)
-  plt.plot(c4, a4, color=cscheme(4), label=l4,zorder=3,lw=2)
+  lab1 = r'${10}^{' + str(l1.split("e")[1]) + '}$' + ' K/s'
+  lab2 = r'${10}^{' + str(l2.split("e")[1]) + '}$' + ' K/s'
+  lab3 = r'${10}^{' + str(l3.split("e")[1]) + '}$' + ' K/s'
+  lab4 = r'${10}^{' + str(l4.split("e")[1]) + '}$' + ' K/s'
+
+  plt.plot(c1, a1, color=cscheme(1), label=lab1,zorder=3,lw=2)
+  plt.plot(c2, a2, color=cscheme(2), label=lab2,zorder=3,lw=2)
+  plt.plot(c3, a3, color=cscheme(3), label=lab3,zorder=3,lw=2)
+  plt.plot(c4, a4, color=cscheme(4), label=lab4,zorder=3,lw=2)
 
   # qr = name.split(" ")[-1].split("e")
   # ax.legend(fontsize=12, bbox_to_anchor=(1, 0.6), loc='upper right', title= r'${10}^{' + str(qr[1]) + '}$' + r'$K/s$')
-  ax.legend(fontsize=12, bbox_to_anchor=(1, 0.6), loc='upper right')
+  ax.legend(fontsize=12, loc='lower right') # bbox_to_anchor=(1, 0.6)
+  # plt.legend(fontsize=12, loc='center')
 
-  ax.set_xlabel('Volume per Atom (Units)', fontsize=18)
+  ax.set_xlabel('Volume per Atom ($\AA^{3}$)', fontsize=18)
   ax.set_ylabel('Normalised Counts ', fontsize=18)
   ax.yaxis.set_label_position('left')
   ax.tick_params(axis="both", direction="in", bottom=True, top=True, left=True, right=True, labelsize=15)
@@ -643,13 +661,13 @@ def plot_atmhisto(name,m1, m2, m3, m4, l1, l2, l3, l4, species, cs, typ):
   #print('Max Y',yl)
   yl1=y1*1.05
   yl2=y2*0.90
-  xl1 = x1 * 1.05
+  xl1 = x1 * 1.02
   xl2 = x2 * 0.90
   ax.set_ylim(yl2, yl1)
   ax.set_xlim(xl2, xl1)
   # ax.set_yscale("log")
 
-  plt.text(15,0.8*yl1,r'Cu',weight='bold',fontsize='13')
+  plt.text(14.5,0.8*yl1,r'Cu',weight='bold',fontsize='13')
   plt.text(23,0.6*yl1,r'Zr',weight='bold',fontsize='13')
 
   rng = [l1, l2, l3, l4]
@@ -666,6 +684,19 @@ def plot_atmhisto(name,m1, m2, m3, m4, l1, l2, l3, l4, species, cs, typ):
   v4 = h4 / n4
 
   tot_v = [v1.sum(axis=0), v2.sum(axis=0), v3.sum(axis=0), v4.sum(axis=0)]
+
+  axins1 = inset_axes(ax,
+                      width="15%",  # width = 30% of parent_bbox
+                      height=2,  # height : 1 inch
+                      loc='upper center')
+  axins1.plot([lab1,lab2,lab3,lab4], tot_v, 'o-', label=l1,zorder=3,lw=2)
+  axins1.tick_params(axis="both", direction="in", bottom=True, top=True, left=True, right=True, labelsize=14)
+  axins1.set_ylabel(r'Avg. Vol. ($\AA^{3}$)', fontsize=18)
+  plt.sca(axins1)
+  plt.xticks(rotation=45)
+  #axins1.set_ylabel('Normalised Counts ', fontsize=18)
+  axins1.yaxis.set_label_position('left')
+
 
   fig.tight_layout(rect=[0, 0.03, 1, 0.95])
   if cs == 0 and species==0:

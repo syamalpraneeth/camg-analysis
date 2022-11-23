@@ -41,10 +41,10 @@ ovito_pote(name,f2,l2,cs,0,1)
 ovito_pote(name,f3,l3,cs,0,1)
 ovito_pote(name,f4,l4,cs,0,1)
 pe_plot_species(name,l1,l2,l3,l4,cs,1)
-
+# """
 
 os._exit(1)
-
+"""
 #rdf AS_PREPARED
 ovito_rdf(f1,l1,cs,0)
 ovito_rdf(f2,l2,cs,0)
@@ -58,11 +58,12 @@ plot_rdf(name,l4,0,cs,1)
 plot_allrdf(name,l1,l2,l3,l4,cs,1)
 # """
 
+# """
 #voronoi AS_PREPARED
 d1a,d1b,d1c = voro_data_bulk(f1,l1,0)
-#  d2a,d2b,d2c = d1a,d1b,d1c
-#  d3a,d3b,d3c = d1a,d1b,d1c
-#  d4a,d4b,d4c = d1a,d1b,d1c
+# d2a,d2b,d2c = d1a,d1b,d1c
+# d3a,d3b,d3c = d1a,d1b,d1c
+# d4a,d4b,d4c = d1a,d1b,d1c
 d2a,d2b,d2c = voro_data_bulk(f2,l2,cs)
 d3a,d3b,d3c = voro_data_bulk(f3,l3,cs)
 d4a,d4b,d4c = voro_data_bulk(f4,l4,cs)
@@ -76,8 +77,9 @@ voro_plot_species(name, d1c, d2c, d3c, d4c, l1, l2, l3, l4, 2, cs, 1)  # Zr
 # voro_plot_case(name,d3a,d3b,d3c,l3,cs,1)
 # voro_plot_case(name,d4a,d4b,d4c,l4,cs,1)
 
-collate_ico(name, d1a, d2a, d3a, d4a, d1b, d2b, d3b, d4b, l1, l2, l3, l4, cs, 1)  # All and Cu only
-plot_chains(name, d1a, d2a, d3a, d4a, l1, l2, l3, l4, 0, cs, 1)  # All
+# collate_ico(name, d1a, d2a, d3a, d4a, d1b, d2b, d3b, d4b, l1, l2, l3, l4, cs, 1)  # All and Cu only
+# plot_chains(name, d1a, d2a, d3a, d4a, l1, l2, l3, l4, 0, cs, 1)  # All
 plot_atmhisto(name, d1a, d2a, d3a, d4a, l1, l2, l3, l4, 0, cs, 1)  # All
 # plot_atmhisto(name,d1b,d2b,d3b,d4b,d5b,d6b,l1,l2,l3,l4,3,cs,1) #Cu
 # plot_atmhisto(name,d1c,d2c,d3c,d4c,d5c,d6c,l1,l2,l3,l4,4,cs,1) #Zr
+# """

@@ -168,10 +168,10 @@ def voro_plot_sort(name,m1,m2,m3,m4,m5,m6,l1,l2,l3,l4,l5,l6,species,cs,typ):
 
     qr = name.split(" ")[-1].split("e")
     if species == 0:
-      ax3.legend(fontsize=12, title=r'${10}^{' + str(qr[1]) + '}$' + r'$K/s$', loc=10,
+      ax3.legend(fontsize=12, title=r'${10}^{' + str(qr[1]) + '}$' + r'$K/s$', loc=10, title_fontsize=13,
                  bbox_to_anchor=(0.02,1.45,1,1))
     else:
-      ax3.legend(fontsize=12, title=r'${10}^{' + str(qr[1]) + '}$' + r'$K/s$' + ', ' + case + '',
+      ax3.legend(fontsize=12, title=r'${10}^{' + str(qr[1]) + '}$' + r'$K/s$' + ', ' + case + '', title_fontsize=13,
                 bbox_to_anchor=(0.02, 1.45, 1, 1))
 
     # yl = max(max(h1, h2, h3, h4, h5, h6))*1.10

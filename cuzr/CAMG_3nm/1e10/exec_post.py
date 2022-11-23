@@ -68,7 +68,7 @@ d1a,d1b,d1c = voro_data_bulk(f1,l1,0)
 d2a, d2b, d2c = voro_data_bulk(f2, l2, 0)
 # voro_plot_case(name, d2a, d2b, d2c, l2, 0, 1)
 
-for cs in range(0,1):
+for cs in range(0,3):
   # d3a,d3b,d3c = d1a,d1b,d1c
   # d4a,d4b,d4c = d1a,d1b,d1c
   # d5a,d5b,d5c = d1a,d1b,d1c

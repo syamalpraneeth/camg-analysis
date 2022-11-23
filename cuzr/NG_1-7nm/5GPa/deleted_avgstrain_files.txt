@@ -1,0 +1,2 @@
+tmp.avgstrain_coll_Cu50Zr50_random_NG_seg_5GPa_asp_All
+tmp.avgstrain_coll_Cu50Zr50_random_NG_seg_5GPa_ann_All

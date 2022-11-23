@@ -1,0 +1,81 @@
+#area fraction
+# 0.85 is in the liquid state at T=1
+# 0.90 is a crystalline solid)
+variable afrac  equal 0.80
+
+#number of particles in 20x20 area
+variable npart  equal ${afrac}*400
+
+#temperature (in reduced units)
+variable temp   equal 1.0
+
+#we use the LJ potential epsilon as energy scale,
+#and sigma as length scale.
+
+units		lj
+dimension 2
+atom_style	atomic
+boundary        p p p
+neighbor        0.5   bin
+neigh_modify    every 1 delay 0 check yes
+
+# create 2D box
+region box block -10 10 -10 10 -0.1 0.1
+create_box 1 box
+
+#put z=0 all the time
+fix 2d  all enforce2d
+
+#put the particles randomly into the box
+create_atoms 1 random ${npart} 324523 box
+
+#all particles has mass 1
+mass   *	1
+
+#Lennard-Jones pair interaction between particles
+# cutoff 5.0 is where force is assumed to be zero
+# (already 2.5 is good, but to calculate rdf we push it further)
+pair_style lj/cut 5.0
+
+#epsilon=1  sigma=1 since we use these as units of energy and length
+pair_coeff * * 1.0 1.0
+
+#minimize energy first to avoid overlapping particles
+minimize 1e-4 1e-4 1000 1000
+reset_timestep 0
+
+#save images
+#shell "mkdir img"
+#shell "rm img/*"
+#dump        img all  image  1000 img/t*.jpg    type type adiam 0.8 zoom 1.7
+#dump_modify img backcolor white  boxcolor black
+#dump_modify img pad 6
+
+#save video
+#dump        video all  movie  20 movie.avi    type type adiam 0.8 zoom 1.7
+#dump_modify video backcolor white  boxcolor black
+
+#integrate Newtons equation of motion with stochastic kicks and friction
+#the kicks and friction model the effect of temperature
+# 1.0 is the coupling between thermostat and system (in units of time)
+
+fix integrator all nve
+fix dynamics   all langevin ${temp} ${temp} 1.0 2352325
+
+#sample radial distribution function g(r) and save it to lj.rdf
+#the 100 100 10000 means sample every 100 steps, make 100 of such samples, and save at 10000 steps
+compute rdf all rdf 200 
+fix saverdf all ave/time 100 100 10000 c_rdf[1] c_rdf[2] file lj.rdf mode vector
+
+
+#output time step, temperature, average kinetic and potential energy
+thermo_style custom step temp  ke pe
+thermo		100
+
+#time step of integrator
+timestep	0.01
+
+#number of integration steps to run
+run		10000
+
+write_dump all atom dump.atom

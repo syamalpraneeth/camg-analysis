@@ -37,7 +37,7 @@ def plot_collated(source,ylab,c,name,tag,only):
   markr = ['o','s']
   mks = [9,12]
   for m in c:
-    for s,mkr in zip(siz,mks):
+    for s,mkrsize,mkrshape in zip(siz,mks,markr):
       csind = 0
       # if isinstance(ax, list):
       for axs,cs in zip(ax,csval):
@@ -55,7 +55,7 @@ def plot_collated(source,ylab,c,name,tag,only):
         fmtstr = StrMethodFormatter('{x:0>5.2f}')
         axs.yaxis.set_major_formatter(fmtstr)
 
-        axs.plot(l, x, 'o:', c='black', mfc=csdict(cs), mec='k', label=s, ms=mkr, zorder=5)
+        axs.plot(l, x, mkrshape+':', c='black', mfc=csdict(cs), mec='k', label=s, ms=mkrsize, zorder=5)
 
         if 'yl' in locals(): yl = max(max(x),yl)
         else: yl = max(x)
@@ -65,16 +65,18 @@ def plot_collated(source,ylab,c,name,tag,only):
         ylv = yl+delta
         ylv2= yl2-delta
 
-        if axs == ax[0]:   axs.set_ylabel(ylab, fontsize=16)
+        if axs == ax[0]:   axs.set_ylabel(ylab, fontsize=18)
         axs.set_facecolor('white')
         axs.grid(color='k', alpha=0.1, zorder=-2)
 
         if source != 'vol': axs.set_ylim(ylv2,ylv)
         axs.tick_params(axis="x",direction="in",left='off',labelsize=14)
         axs.tick_params(axis="y",direction="in",labelsize=14)
-        axs.legend(fontsize=12, bbox_to_anchor=(0.6, -0.02, 0.4, 1), bbox_transform=axs.transAxes)
+        # axs.legend(fontsize=12, bbox_to_anchor=(0.6, -0.02, 0.4, 1), bbox_transform=axs.transAxes)
+        axs.legend(fontsize=12,loc='lower left')
 
         if cs!='All': axs.text(0.7, 0.7, cs, transform=axs.transAxes, fontsize='15')
+        else: axs.text(0.7, 0.65, r"Entire"+"\n"+"sample", transform=axs.transAxes, fontsize='15')
 
         plt.setp(axs.spines.values(), linewidth=1.5)
         plt.xticks(rotation=45)  # ,weight='bold')

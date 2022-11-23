@@ -642,16 +642,16 @@ def inter(p, q):  # function to give intersection of two lists
 def reassemble(h1, b1, h2, b2, h3, b3, h4, b4, h5, b5, h6, b6):  # rearrange all b entries
   un1 = union(b1, b2)
   un2 = union(b3, un1)
-  un3 = union(b4, un2)
-  un4 = union(b5, un2)
-  un5 = union(b6, un2)
+  un3 = union(b4, un2) #un2
+  un4 = union(b5, un3) #un2
+  un5 = union(b6, un4) #un2
   in1 = inter(b1, b2)
   in2 = inter(b3, in1)
-  in3 = inter(b4, in2)
-  in4 = inter(b5, in2)
-  in5 = inter(b5, in2)
+  in3 = inter(b4, in2) #in2
+  in4 = inter(b5, in3) #in2
+  in5 = inter(b5, in4) #in2
 
-  ncdf = [x for x in un3 if x not in in5]
+  ncdf = [x for x in un5 if x not in in5] #un3 in5
 
   b = in5 + ncdf
 
@@ -712,7 +712,7 @@ def collate_ico(name, o1, o2, o3, o4, o5, o6, p1, p2, p3, p4, p5, p6, l1, l2, l3
   i_ico = "<0 0 12 0>"
   a1 = [o1.a[o1.b.index(i_ico)], o2.a[o2.b.index(i_ico)], o3.a[o3.b.index(i_ico)], o4.a[o4.b.index(i_ico)],
         o5.a[o5.b.index(i_ico)], o6.a[o6.b.index(i_ico)]]
-  a2 = [p1.a[o1.b.index(i_ico)], p2.a[o2.b.index(i_ico)], p3.a[o3.b.index(i_ico)], p4.a[p4.b.index(i_ico)],
+  a2 = [p1.a[p1.b.index(i_ico)], p2.a[p2.b.index(i_ico)], p3.a[p3.b.index(i_ico)], p4.a[p4.b.index(i_ico)],
         p5.a[p5.b.index(i_ico)], p6.a[p6.b.index(i_ico)]]
   a3 = [l1, l2, l3, l4, l5, l6]
 
@@ -724,7 +724,7 @@ def collate_ico(name, o1, o2, o3, o4, o5, o6, p1, p2, p3, p4, p5, p6, l1, l2, l3
       writer.writerow(row)
 
   b1 = [o1.h[0], o2.h[0], o3.h[0], o4.h[0], o5.h[0], o6.h[0]]
-  b2 = [p1.h[0], o2.h[0], p3.h[0], p4.h[0], p5.h[0], p6.h[0]]
+  b2 = [p1.h[0], p2.h[0], p3.h[0], p4.h[0], p5.h[0], p6.h[0]]
   rows2 = zip(b1, b2, a3)
   fil = 'tmp.ico-like_coll_' + name.replace(" ", "_") + '_' + tag + '_' + csstr
   with open(fil, 'w') as f:
@@ -797,6 +797,7 @@ def ovito_strain(pipeline, fil, case):
     orientation = Qt.Vertical,
     offset_y = 0.06,
     font_size = 0.12,
+    label1="≥3",
     format_string = '%1.0f')
   vp.overlays.append(overlay)
   vp.render_image(size=(800, 600), filename=fn + "_strain_ortho.png", background=(1, 1, 1)) #alpha=True)

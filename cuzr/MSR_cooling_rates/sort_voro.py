@@ -144,10 +144,16 @@ def voro_plot_sort(name,m1,m2,m3,m4,l1,l2,l3,l4,species,cs,typ):
         axs.grid(color='w', zorder=-2)
       # axs.grid(color='w', zorder=-2)
       plt.setp(axs.spines.values(), linewidth=1.5)
-      p1 = axs.bar(y1, h1, width=0.2, label=l1, color=cscheme(1), edgecolor='black', zorder=3)
-      p2 = axs.bar(y1 + w, h2, width=0.2, label=l2, color=cscheme(2), edgecolor='black', zorder=3)
-      p3 = axs.bar(y1 + 2 * w, h3, width=0.2, label=l3, color=cscheme(3), edgecolor='black', hatch=".", zorder=3)
-      p4 = axs.bar(y1 + 3 * w, h4, width=0.2, label=l4, color=cscheme(4), edgecolor='black', hatch="++", zorder=3)
+
+      lab1 = r'${10}^{' + str(l1.split("e")[1]) + '}$' + ' K/s'
+      lab2 = r'${10}^{' + str(l2.split("e")[1]) + '}$' + ' K/s'
+      lab3 = r'${10}^{' + str(l3.split("e")[1]) + '}$' + ' K/s'
+      lab4 = r'${10}^{' + str(l4.split("e")[1]) + '}$' + ' K/s'
+
+      p1 = axs.bar(y1, h1, width=0.2, label=lab1, color=cscheme(1), edgecolor='black', zorder=3)
+      p2 = axs.bar(y1 + w, h2, width=0.2, label=lab2, color=cscheme(2), edgecolor='black', zorder=3)
+      p3 = axs.bar(y1 + 2 * w, h3, width=0.2, label=lab3, color=cscheme(3), edgecolor='black', hatch=".", zorder=3)
+      p4 = axs.bar(y1 + 3 * w, h4, width=0.2, label=lab4, color=cscheme(4), edgecolor='black', hatch="++", zorder=3)
 
       axs.yaxis.set_label_position('left')
       axs.tick_params(axis="y", direction="in", labelsize=14)

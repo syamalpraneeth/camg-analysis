@@ -22,7 +22,7 @@ f5,l5=src+'cibd/cibd_multi/50-50/50K/1e10/3nm/restart/data/dump.dep.cibd_3nm_300
 f6,l6=src+'cibd/cibd_multi/50-50/50K/1e10/3nm/restart/data/dump.dep.cibd_3nm_600meV-lay3','600meV'
 f7,l7=src+'cibd/cibd_multi/50-50/50K/1e10/3nm/data/dump.dep.cibd_3nm_6000meV-lay3','6000meV'
 
-# """
+"""
 #pe/atom AS_PREPARED
 for f in glob.glob('tmp.pote_coll_' + name.replace(" ", "_") + '_asp_*'):
   with open("deleted_pote_files.txt", "a") as text_file:
@@ -61,7 +61,6 @@ for cs in range(0,3):
 
   plot_allrdf(name,l1,l2,l3,l4,l5,l6,cs,1)
 # os._exit(1)
-# """
 
 #voronoi AS_PREPARED
 d1a,d1b,d1c = voro_data_bulk(f1,l1,0)
@@ -94,3 +93,8 @@ for cs in range(0,3):
   plot_atmhisto(name,d1a,d2a,d3a,d4a,d5a,d6a,l1,l2,l3,l4,l5,l6,0,cs,1) #All
   # plot_atmhisto(name,d1b,d2b,d3b,d4b,d5b,d6b,l1,l2,l3,l4,l5,l6,3,cs,1) #Cu
   # plot_atmhisto(name,d1c,d2c,d3c,d4c,d5c,d6c,l1,l2,l3,l4,l5,l6,4,cs,1) #Zr
+  
+"""
+
+f8,l8=src+'cibd/cibd_multi/50-50/50K/1e10/3nm/dsc/','60meV'
+cp_fit(f8,l8)
